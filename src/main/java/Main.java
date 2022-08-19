@@ -11,11 +11,10 @@ public class Main {
         int port = 8083;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
-                Socket clientSocket = serverSocket.accept(); // ждем подключения
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                //BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-                out.println(String.format("Твой порт %d", clientSocket.getPort()));
+                Socket clientSocket = serverSocket.accept();
+                try (PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+                    out.println(String.format("Твой порт %d", clientSocket.getPort()));
+                }
             }
         }
     }
